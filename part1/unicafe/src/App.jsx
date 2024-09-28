@@ -1,12 +1,13 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const StatisticsLine = ({ text, value }) => {
   return (
     <tr>
       <td>{text}</td>
-      {/* I need to limit the amount of decimals to 1 */}
       <td>
-        {value.toFixed(1)} {text === "positive" ? "%" : ""}
+        {value % 1 === 0 ? value : value.toFixed(1)}{" "}
+        {text === "positive" ? "%" : ""}
       </td>
     </tr>
   );
@@ -46,12 +47,32 @@ const Statistics = ({ good, neutral, bad }) => {
               />
             </>
           ) : (
-            <p>No feedback given</p>
+            <tr>
+              <td>
+                <p>No feedback given</p>
+              </td>
+            </tr>
           )}
         </tbody>
       </table>
     </>
   );
+};
+
+StatisticsLine.propTypes = {
+  text: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+Statistics.propTypes = {
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
+};
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 const App = () => {
